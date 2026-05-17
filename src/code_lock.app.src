@@ -1,15 +1,8 @@
 {application, code_lock,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
+ [{description, "Code Lock with Suspended State (gen_statem)"},
+  {vsn, "1.0.0"},
+  {registered, [code_lock]},
+  {applications, [kernel, stdlib]},
   {mod, {code_lock_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {licenses, ["Apache-2.0"]},
-  {links, []}
+  {modules, []}
  ]}.
