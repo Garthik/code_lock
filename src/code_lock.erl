@@ -166,11 +166,11 @@ handle_event({call, From}, reset, {suspended, _}, _Data) ->
 handle_event({call, From}, get_state, {StateName, _}, _Data) ->
     {keep_state_and_data, [{reply, From, StateName}]};
 
-handle_event({call, From}, reset, {StateName, _}, Data) ->
+handle_event({call, From}, reset, {_StateName, _}, Data) ->
     {next_state, {locked, undefined}, Data#data{buttons = [], failed_attempts = 0},
      [{reply, From, ok}]};
 
-handle_event(EventType, EventContent, StateName, Data) ->
+handle_event(EventType, EventContent, StateName, _Data) ->
     io:format("Unhandled event: ~p ~p in state ~p~n", [EventType, EventContent, StateName]),
     {keep_state_and_data, []}.
 
@@ -187,8 +187,8 @@ do_unlock() ->
 -spec terminate(term(), {locked | open | suspended, term()}, #data{}) -> ok.
 terminate(_Reason, State, _Data) ->
     case State of
-        {open, _} -> do_lock();
-        {suspended, _} -> io:format("Lock terminated while suspended~n", []);
+        {open, _} -> catch do_lock();
+        {suspended, _} -> catch io:format("Lock terminated while suspended~n", []);
         _ -> ok
     end,
     ok.

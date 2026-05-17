@@ -1,0 +1,53 @@
+1> code_lock:start_link("1234").
+Locked
+{ok,<0.151.0>}
+2> code_lock:get_state().
+locked
+3> code_lock:button($1).
+ok
+4> code_lock:button($2).
+ok
+5> code_lock:button($3).
+ok
+6> code_lock:button($4).
+Open
+ok
+7> code_lock:get_state().
+open
+Locked
+8> code_lock:reset().
+ok
+9> code_lock:button($0).
+ok
+10> code_lock:button($0).
+ok
+11> code_lock:button($0).
+ok
+12> code_lock:button($0).
+Incorrect code. Attempts: 1/3
+ok
+13> code_lock:get_state().
+locked
+14> code_lock:button($1).
+ok
+15> code_lock:button($1).
+ok
+16> code_lock:button($1).
+ok
+17> code_lock:button($1).
+Incorrect code. Attempts: 2/3
+ok
+18> code_lock:button($1).
+ok
+19> code_lock:button($1).
+ok
+20> code_lock:button($1).
+ok
+21> code_lock:button($1).
+Incorrect code. Attempts: 3/3
+ok
+Too many failed attempts! Lock suspended for 10 seconds.
+LOCK SUSPENDED - All attempts blocked for 10 seconds
+Lock resumed. You can try again.
+22> code_lock:get_state().
+suspended
